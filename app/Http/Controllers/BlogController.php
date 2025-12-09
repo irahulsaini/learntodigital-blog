@@ -18,7 +18,6 @@ class BlogController extends Controller
     public function show($slug)
     {
         $post = Post::where('slug', $slug)
-                    ->where('published_at', true)
                     ->firstOrFail();
         return view('blog.show', compact('post'));
     }

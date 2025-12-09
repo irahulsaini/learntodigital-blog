@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Posts\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 
+
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -20,7 +21,8 @@ class PostsTable
                 ImageColumn::make('featured_image')
                 ->label('Image')
                 ->square()
-                ->size(50),
+                ->size(50)
+                ->url(fn ($record) => $record->featured_image ? asset('storage/posts/' . $record->featured_image) : null),
                 TextColumn::make('title')
                 ->searchable()
                 ->sortable()
