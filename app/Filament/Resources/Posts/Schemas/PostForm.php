@@ -33,6 +33,7 @@ return $schema->components([
             FileUpload::make('featured_image')
                 ->image()
                 ->directory('posts')
+                ->disk('public_uploads')
                 ->nullable(),
 
             RichEditor::make('content')->required(),
