@@ -2,22 +2,43 @@
 
 @extends('layout.app')
 
+@section('title', 'Learn to Digital Blog')
+@section('description', 'Learn to Digital Blog')
+
 
 @section('content')
+<section class="py-5 "></section>
+<section class="bg-white py-5">
+<div class="container  ">
+    <h1 class="mb-4 mt-5 text-dark">Blog</h1>
 
-<div class="container mx-auto py-10">
-    <h1 class="text-3xl font-bold mb-6">Blog</h1>
+    <div class="row g-4">
+        @foreach($posts as $post)
+            <div class="col-md-4">
+                
+                <div class="card h-100">
+                    @if($post->featured_image)
+                        <img src="{{ asset('blog/storage/' . $post->featured_image) }}" 
+                             class="card-img-top" 
+                             alt="{{ $post->title }}">
+                    @endif
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">
+                            <a href="{{ route('blog.show', $post->slug) }}" class="">
+                                {{ $post->title }}
+                            </a>
+                        </h5>
+                        <p class="card-text">{{ $post->excerpt }}</p>
+                        <a href="{{ route('blog.show', $post->slug) }}" class="mt-auto btn btn-primary btn-sm">Read More</a>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
 
-    @foreach($posts as $post)
-        <div class="mb-8 border-b pb-4">
-            <h2 class="text-xl font-semibold">
-                <a href="{{ route('blog.show', $post->slug) }}">{{ $post->title }}</a>
-            </h2>
-            
-            <p class="mt-2">{{ $post->excerpt }}</p>
-        </div>
-    @endforeach
-
-    {{ $posts->links() }}
+    <div class="mt-4">
+        {{ $posts->links('pagination::bootstrap-5') }}
+    </div>
 </div>
+</section>
 @endsection

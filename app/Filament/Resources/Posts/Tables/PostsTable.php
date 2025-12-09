@@ -18,11 +18,7 @@ class PostsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('featured_image')
-                ->label('Image')
-                ->square()
-                ->size(50)
-                ->url(fn ($record) => $record->featured_image ? asset('storage/posts/' . $record->featured_image) : null),
+                
                 TextColumn::make('title')
                 ->searchable()
                 ->sortable()
