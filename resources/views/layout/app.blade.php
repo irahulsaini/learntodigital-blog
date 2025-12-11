@@ -9,8 +9,18 @@
     <meta property="og:title" content="@yield('title')">
     <meta property="og:description" content="@yield('description')">
     <meta property="og:type" content="article">
-    
+    <meta property="og:image" content="@yield('image')">
+    <link rel="canonical" href="@yield('canonical')"/>
 
+        <!-- Twitter Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="twitter:domain" content="learntodigital.com">
+        <meta property="twitter:url" content="@yield('canonical')">
+        <meta name="twitter:title" content="@yield('title')">
+        <meta name="twitter:description" content="@yield('description')">
+        <meta name="twitter:image" content="@yield('image')">
+        
+                
         <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/png" />
 
         <!-- Header Css -->
@@ -452,6 +462,112 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
         <script src="/assets/js/js.js?aa"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const pageUrl   = encodeURIComponent(window.location.href);
+    const pageTitle = encodeURIComponent(document.title);
+    const shareText = encodeURIComponent("Check this out!");
+
+    // Facebook
+    document.getElementById("facebookShare").href =
+        `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+
+    // Twitter (X)
+    document.getElementById("twitterShare").href =
+        `https://twitter.com/intent/tweet?text=${pageTitle}&url=${pageUrl}`;
+
+    // LinkedIn
+    document.getElementById("linkedinShare").href =
+        `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`;
+
+    // WhatsApp
+    document.getElementById("whatsappShare").href =
+        `https://wa.me/?text=${pageTitle}%20${pageUrl}`;
+
+    // Telegram
+    document.getElementById("telegramShare").href =
+        `https://t.me/share/url?url=${pageUrl}&text=${pageTitle}`;
+
+    // Native Web Share API (mobile)
+    const nativeBtn = document.getElementById("nativeShareBtn");
+
+    nativeBtn.addEventListener("click", async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: document.title,
+                    text: "Check this out!",
+                    url: window.location.href
+                });
+            } catch (err) {
+                console.warn("Share cancelled:", err);
+            }
+        } else {
+            alert("Native sharing is not supported on this device.");
+        }
+    });
+});
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const content = document.getElementById("postContent");
+    const toc = document.getElementById("toc");
+
+    // Which heading tags to include
+    const headings = content.querySelectorAll("h2, h3");
+
+    if (headings.length === 0) {
+        toc.style.display = "none";
+        return;
+    }
+
+    let tocHTML = "<h5 class='mb-3'>Table of Contents</h5><ul class='list-unstyled'>";
+
+    headings.forEach((heading, index) => {
+        const text = heading.innerText;
+        const slug = text
+            .toLowerCase()
+            .replace(/[^\w]+/g, "-")
+            .replace(/(^-|-$)/g, "");
+
+        const id = slug + "-" + index;
+        heading.id = id;
+
+        const indent = heading.tagName === "H3" ? "ms-3" : "";
+
+        tocHTML += `
+            <li class="${heading.tagName.toLowerCase()} ${indent}">
+                <a href="#${id}" class="toc-link text-decoration-none">${text}</a>
+            </li>
+        `;
+    });
+
+    tocHTML += "</ul>";
+    toc.innerHTML = tocHTML;
+
+    // Smooth scroll with offset (header height)
+    const OFFSET = 100; // px
+
+    document.querySelectorAll(".toc-link").forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute("href").substring(1);
+            const target = document.getElementById(targetId);
+
+            const topPos = target.getBoundingClientRect().top + window.scrollY - OFFSET;
+
+            window.scrollTo({
+                top: topPos,
+                behavior: "smooth"
+            });
+        });
+    });
+});
+</script>
+
+
 
     </body>
 </html>
