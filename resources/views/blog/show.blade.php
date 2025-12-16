@@ -6,6 +6,147 @@
 @section('image', $post->featured_image ? asset('blog/storage/' . $post->featured_image) :  '')
 
 @section('content')
+
+<script type="application/ld+json">
+
+<?=json_encode([
+  "@context" => "https://schema.org",
+  "@type" => "BlogPosting",
+  "mainEntityOfPage" => [
+    "@type" => "WebPage",
+    "@id" => $post->slug ? config('app.url') . '/' . ($post->slug) :  '',
+  ],
+  "headline" => $post->title,
+  "description" => $post->excerpt,
+  "image" => $post->featured_image ? [
+    "@type" => "ImageObject",
+    "url" => asset('blog/storage/' . $post->featured_image),
+    "width" => 1200,
+    "height" => 628
+  ] : null,
+  "author" => [
+    "@type" => "Person",
+    "name" => "Gaurav",
+  ],
+  "publisher" => [
+    "@type" => "Organization",
+    "name" => config('app.name'),
+    "logo" => [
+      "@type" => "ImageObject",
+      "url" => asset('assets/img/logowebwhite.png'),
+    ],
+  ],
+  "datePublished" => optional($post->published_at)->toIso8601String(),
+  "dateModified" => optional($post->published_at)->toIso8601String(),
+],JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);?>
+
+</script>
+@php
+$webPageSchema = [
+    "@context" => "https://schema.org",
+    "@type" => "WebPage",
+    "@id" => url()->current() . "#webpage",
+    "url" => url()->current(),
+    "name" => $post->title,
+    "description" => $post->excerpt,
+    "inLanguage" => "en-IN",
+    "isPartOf" => [
+        "@type" => "WebSite",
+        "@id" => url('/') . "#website"
+    ]
+];
+@endphp
+
+<script type="application/ld+json">
+{!! json_encode($webPageSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+
+@php
+$breadcrumbSchema = [
+    "@context" => "https://schema.org",
+    "@type" => "BreadcrumbList",
+    "itemListElement" => [
+        [
+            "@type" => "ListItem",
+            "position" => 1,
+            "name" => "Home",
+            "item" => url('https://www.learntodigtial.com')
+        ],
+        [
+            "@type" => "ListItem",
+            "position" => 2,
+            "name" => "Blog",
+            "item" => url('/blog')
+        ],
+        [
+            "@type" => "ListItem",
+            "position" => 3,
+            "name" => $post->title,
+            "item" => $post->slug ? config('app.url') . '/' . ($post->slug) :  ''
+        ]
+    ]
+];
+@endphp
+
+<script type="application/ld+json">
+{!! json_encode($breadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+
+
+@php
+$staticAuthorSchema = [
+    "@context" => "https://schema.org",
+    "@type" => "Person",
+    "@id" => url('/#author'),
+    "name" => "LTD",
+    "url" => url('/'),
+    "description" => "Editorial team at Learn To Digital covering SEO, digital marketing, and growth strategies.",
+    "sameAs" => [
+        "https://www.linkedin.com/company/learntodigital",
+        "https://twitter.com/learntodigital"
+    ]
+];
+@endphp
+<script type="application/ld+json">
+{!! json_encode($staticAuthorSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+
+
+@php
+$organizationSchema = [
+    "@context" => "https://schema.org",
+    "@type" => "Organization",
+    "@id" => url('/#organization'),
+    "name" => "Learn To Digital",
+    "url" => url('/'),
+    "logo" => [
+        "@type" => "ImageObject",
+        "url" => asset('assets/img/logowebwhite.png'),
+        "width" => 300,
+        "height" => 60
+    ],
+    "sameAs" => [
+        "https://www.facebook.com/learntodigital",
+        "https://www.linkedin.com/company/learntodigital",
+        "https://twitter.com/learntodigital"
+    ]
+];
+@endphp
+<script type="application/ld+json">
+{!! json_encode($organizationSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+@php
+$imagePath = storage_path('app/public/' . $post->featured_image);
+$imageWidth = null;
+$imageHeight = null;
+
+if (file_exists($imagePath)) {
+    [$imageWidth, $imageHeight] = getimagesize($imagePath);
+}
+@endphp
+
+
+
 <style>
 body,html{
     letter-spacing: .5px;
@@ -140,12 +281,16 @@ body,html{
                 <li class="breadcrumb-item active " aria-current="page">{{ $post->title }}</li>
               </ol>
             </nav>
-            <h1 class="text-3xl font-bold mb-4">{{ $post->title }}</h1>   
+            <h1 class="text-3xl font-bold mb-2">{{ $post->title }}</h1> 
+            <div class="author text-muted mb-4 small">
+                Pulished by: LTD Team
+            </div>
             @if($post->featured_image)
                 <img src="{{ asset('blog/storage/' . $post->featured_image) }}" 
                      class="card-img-top" 
                      alt="{{ $post->title }}">
             @endif
+            
             
             <div class="py-4 ">
                 <div id="postContent">

@@ -119,7 +119,7 @@
                             </li>
             
                             <li class="nav-item me-2">
-                                <a class="nav-link" href="https://learntodigital-ltd.blogspot.com/">Blogs</a>
+                                <a class="nav-link" href="/blog/">Blogs</a>
                             </li>
             
                             <li class="nav-item me-2">
@@ -207,7 +207,7 @@
                 
                     <div class="divider"></div>
                 
-                    <a class="nav-link" href="https://learntodigital-ltd.blogspot.com/">
+                    <a class="nav-link" href="/blog/">
                         <i class="bi bi-journal-text"></i> Blogs
                     </a>
                 
@@ -297,7 +297,7 @@
                         <h6 class="footer-heading">Quick Links</h6>
                         <ul class="footer-links list-unstyled">
                             <li><a href="/about/">About</a></li>
-                            <li><a href="/blogs/">Blog</a></li>
+                            <li><a href="/blog/">Blog</a></li>
                             <li><a href="/video-testimonials/">Testimonials</a></li>
                             <li><a href="/contact/">Contact</a></li>
                             <li><a href="/sitemap.xml">Sitemap</a></li>

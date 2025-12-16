@@ -4,6 +4,8 @@
 
 @section('title', 'Learn to Digital Blog')
 @section('description', 'Learn to Digital Blog')
+@section('canonical', config('app.url'))
+
 
 
 @section('content')
