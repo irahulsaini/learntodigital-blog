@@ -26,7 +26,8 @@
   ] : null,
   "author" => [
     "@type" => "Person",
-    "name" => "Gaurav",
+    "name" => "LTD Team",
+    "url" => url('/')
   ],
   "publisher" => [
     "@type" => "Organization",
@@ -41,25 +42,7 @@
 ],JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);?>
 
 </script>
-@php
-$webPageSchema = [
-    "@context" => "https://schema.org",
-    "@type" => "WebPage",
-    "@id" => url()->current() . "#webpage",
-    "url" => url()->current(),
-    "name" => $post->title,
-    "description" => $post->excerpt,
-    "inLanguage" => "en-IN",
-    "isPartOf" => [
-        "@type" => "WebSite",
-        "@id" => url('/') . "#website"
-    ]
-];
-@endphp
 
-<script type="application/ld+json">
-{!! json_encode($webPageSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-</script>
 
 @php
 $breadcrumbSchema = [
@@ -286,7 +269,7 @@ body,html{
               </ol>
             </nav>
             <h1 class="text-3xl font-bold mb-2">{{ $post->title }}</h1> 
-            <div class="author text-muted mb-4 small">
+            <div class="author text-muted mb-4 small" id="author-ltd">
                 Pulished by: LTD Team
             </div>
             @if($post->featured_image)
@@ -300,6 +283,70 @@ body,html{
                 <div id="postContent">
                     {!! $post->content !!}
                 </div>
+                
+                @if(is_array($post->faqs) && count($post->faqs))
+
+                    @php
+                        $faqSchema = [
+                            '@context' => 'https://schema.org',
+                            '@type' => 'FAQPage',
+                            'mainEntity' => collect($post->faqs)->map(function ($faq) {
+                                return [
+                                    '@type' => 'Question',
+                                    'name' => strip_tags($faq['question']),
+                                    'acceptedAnswer' => [
+                                        '@type' => 'Answer',
+                                        'text' => strip_tags($faq['answer']),
+                                    ],
+                                ];
+                            })->values()->toArray(),
+                        ];
+                    @endphp
+                    <div class="faq-section my-5">
+                        <h2 class="mb-4">Frequently Asked Questions</h2>
+
+                        <div class="accordion" id="faqAccordion">
+                            @foreach($post->faqs as $index => $faq)
+                                @php
+                                    $headingId = 'faqHeading' . $index;
+                                    $collapseId = 'faqCollapse' . $index;
+                                @endphp
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="{{ $headingId }}">
+                                        <button
+                                            class="accordion-button {{ $index !== 0 ? 'collapsed' : '' }}"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#{{ $collapseId }}"
+                                            aria-expanded="{{ $index === 0 ? 'true' : 'false' }}"
+                                            aria-controls="{{ $collapseId }}"
+                                        >
+                                            {{ $faq['question'] }}
+                                        </button>
+                                    </h2>
+
+                                    <div
+                                        id="{{ $collapseId }}"
+                                        class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}"
+                                        aria-labelledby="{{ $headingId }}"
+                                        data-bs-parent="#faqAccordion"
+                                    >
+                                        <div class="accordion-body small">
+                                            {!! nl2br(e($faq['answer'])) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <script type="application/ld+json">
+                        {!! json_encode($faqSchema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}
+                        </script>
+                    </div>
+                @endif
+
+                
             </div>
         </div>
         <div class="col-md-3 sticky-top " >
@@ -336,5 +383,9 @@ body,html{
     </div>
 </div>
 </section>
+
+@if(!empty($post->custom_html))
+    {!! $post->custom_html !!}
+@endif
 
 @endsection

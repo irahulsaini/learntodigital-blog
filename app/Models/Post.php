@@ -12,12 +12,17 @@ class Post extends Model
         'slug',
         'excerpt',
         'content',
+        'custom_html',
+        'faqs',
         'featured_image',
         'published_at',
         'seo_title',
         'seo_description',
         'created_at',
         'updated_at'
+    ];
+    protected $casts = [
+        'faqs' => 'array',
     ];
 
 }
