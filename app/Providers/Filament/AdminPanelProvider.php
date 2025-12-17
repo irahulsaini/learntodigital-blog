@@ -18,11 +18,20 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Forms\Components\Repeater;
+
+use Filament\Support\Facades\FilamentView;
+
 
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+
+        FilamentView::registerRenderHook(
+            'panels::head.end',
+            fn () => '<script src="https://cdn.tiny.cloud/1/ohnas3xt9ba3rl9nllgfs1o8bmrmjsaibvgca1nn2gkt9i9l/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script><link rel="stylesheet" href="/blog/public/css/filament/filament/custom.css"/>'
+        );
         return $panel
             ->default()
             ->id('admin')

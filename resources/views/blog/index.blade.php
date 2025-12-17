@@ -20,17 +20,19 @@
                 
                 <div class="card h-100">
                     @if($post->featured_image)
+                    <a href="{{ route('blog.show', $post->slug) }}" class="d-block">
                         <img src="{{ asset('blog/storage/' . $post->featured_image) }}" 
                              class="card-img-top" 
                              alt="{{ $post->title }}">
+                    </a>
                     @endif
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">
-                            <a href="{{ route('blog.show', $post->slug) }}" class="">
+                            <a href="{{ route('blog.show', $post->slug) }}" class=" text-warning">
                                 {{ $post->title }}
                             </a>
                         </h5>
-                        <p class="card-text">{{ $post->excerpt }}</p>
+                        <p class="card-text text-muted small">{{ $post->excerpt }}</p>
                         <a href="{{ route('blog.show', $post->slug) }}" class="mt-auto btn btn-primary btn-sm">Read More</a>
                     </div>
                 </div>

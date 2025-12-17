@@ -9,7 +9,7 @@
 
 <script type="application/ld+json">
 
-<?=json_encode([
+<?=json_encode([ 
   "@context" => "https://schema.org",
   "@type" => "BlogPosting",
   "mainEntityOfPage" => [
@@ -182,8 +182,12 @@ body,html{
     .breadcrumb li{
         font-size:12px;
     }
+    .toc ul{
+        max-height:70vh;
+        overflow:auto; 
+    }
     #toc a{
-        font-size:13px;
+        font-size:12px;
     }
     #toc .h1,
     #toc .h2,
@@ -231,7 +235,7 @@ body,html{
     <div class="row justify-content-center">
         <div class="col-md-3 ">
             <div class="sticky-top "  style="top:100px">
-                <div class="toc mb-4">
+                <div class="toc mb-4 bg-light border rounded-3 px-3 py-3">
                     <div id="toc"></div>
                 </div>
                 <div class="share text-center">
@@ -301,19 +305,19 @@ body,html{
         <div class="col-md-3 sticky-top " >
             
             <div class="sticky-top "  style="top:100px">
-                <form class="courseDemoForm bg-white" novalidate  action="/PHPMailer/mail/" method="post">
-                    <h5 class="modal-title" id="courseDemoModalLabelLabel">Book Free Demo</h5>
+                <form class="courseDemoForm bg-light px-4 py-3 border border-success rounded-3" novalidate  action="/PHPMailer/mail/" method="post">
+                    <h5 class="modal-title text-center mb-3 pb-3 border-bottom border-success" id="courseDemoModalLabelLabel">Book Free Demo</h5>
                     <div class="mb-2">
                         <label class="form-label small">Full name</label>
-                        <input class="form-control form-control-sm" type="text" name="name" required />
+                        <input class="form-control form-control-sm" type="text" name="name" placeholder="Your Name" required />
                     </div>
                     <div class="mb-2">
                         <label class="form-label small">Email</label>
-                        <input class="form-control form-control-sm" type="email" name="email" required />
+                        <input class="form-control form-control-sm" type="email" name="email" placeholder="Your Email" required />
                     </div>
                     <div class="mb-2">
                         <label class="form-label small">Mobile</label>
-                        <input class="form-control form-control-sm" type="tel" name="phone" required />
+                        <input class="form-control form-control-sm" type="tel" name="phone" placeholder="Your Phone" required />
                     </div>
                     <div class="mb-3">
                         <label class="form-label small">City</label>

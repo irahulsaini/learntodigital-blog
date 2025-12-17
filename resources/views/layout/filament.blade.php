@@ -1,0 +1,1 @@
+<script src="https://cdn.tiny.cloud/1/ohnas3xt9ba3rl9nllgfs1o8bmrmjsaibvgca1nn2gkt9i9l/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>

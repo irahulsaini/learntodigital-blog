@@ -1,0 +1,5 @@
+
+.fi-fo-rich-editor .fi-fo-rich-editor-main{
+    overflow-y: scroll;
+    max-height:400px;
+}

@@ -31,7 +31,84 @@
 
         <!-- Google Fonts -->
         <link  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Poppins:wght@400;700&display=swap"  rel="stylesheet" />
-        
+
+        @php
+$localBusinessSchema = [
+    "@context" => "https://schema.org",
+    "@type" => "LocalBusiness",
+    "@id" => "https://www.learntodigital.com/#localbusiness",
+    "name" => "LearnToDigital",
+    "alternateName" => "Learn To Digital",
+    "url" => "https://www.learntodigital.com/",
+    "telephone" => "+91 99994 03032",
+    "email" => "info@learntodigital.com",
+    "logo" => "https://www.learntodigital.com/assets/img/logowebwhite.png",
+    "image" => "https://www.learntodigital.com/assets/img/about.jpg",
+    "description" => "LearnToDigital — practical, project-led digital marketing and tech training with mentorship and placement support.",
+    "priceRange" => "INR",
+
+    "sameAs" => [
+        "https://www.facebook.com/learntodigital",
+        "https://www.instagram.com/learntodigital/",
+        "https://www.youtube.com/@learntodigital3942",
+        "https://www.linkedin.com/company/learn-to-digital/"
+    ],
+
+    "address" => [
+        "@type" => "PostalAddress",
+        "streetAddress" => "909, 9th Floor, Vipul Business Park, Central Park II, Sohna Rd Hwy, Sector 48",
+        "addressLocality" => "Gurugram",
+        "addressRegion" => "Haryana",
+        "postalCode" => "122018",
+        "addressCountry" => "IN"
+    ],
+
+    "geo" => [
+        "@type" => "GeoCoordinates",
+        "latitude" => 28.4104903,
+        "longitude" => 77.0394627
+    ],
+
+    "openingHoursSpecification" => [
+        [
+            "@type" => "OpeningHoursSpecification",
+            "dayOfWeek" => [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday"
+            ],
+            "opens" => "09:30",
+            "closes" => "18:30"
+        ],
+        [
+            "@type" => "OpeningHoursSpecification",
+            "dayOfWeek" => "Saturday",
+            "opens" => "10:00",
+            "closes" => "16:00"
+        ]
+    ],
+
+    "hasMap" => "https://www.google.com/maps/search/?api=1&query=28.4104903,77.0394627",
+    "areaServed" => "Gurugram",
+
+    "contactPoint" => [
+        [
+            "@type" => "ContactPoint",
+            "telephone" => "+91 99994 03032",
+            "contactType" => "customer service",
+            "areaServed" => "IN",
+            "availableLanguage" => ["English", "Hindi"]
+        ]
+    ]
+];
+@endphp
+
+<script type="application/ld+json">
+{!! json_encode($localBusinessSchema) !!}
+</script>
+
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -537,7 +614,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const indent = heading.tagName === "H3" ? "ms-3" : "";
 
         tocHTML += `
-            <li class="${heading.tagName.toLowerCase()} ${indent}">
+            <li class="${heading.tagName.toLowerCase()} ${indent} mb-0">
                 <a href="#${id}" class="toc-link text-decoration-none">${text}</a>
             </li>
         `;
